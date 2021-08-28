@@ -5,42 +5,48 @@ import {
   GET_POKEMONS_SUCCESS,
   GET_MORE_POKEMONS,
   GET_MORE_POKEMONS_ERROR,
-  GET_MORE_POKEMONS_SUCCESS
+  GET_MORE_POKEMONS_SUCCESS,
 } from "../types";
 
 const initialState = {
   posts: [],
   notice: [
     {
-      name:
-        "Estos son todos los juegos de Pokémon que están actualmente en desarrollo",
+      id: 1,
+      name: "Juegos de Pokémon que están actualmente en desarrollo",
       category: "Noticia",
-      url:
-        "https://images.nintendolife.com/505ca16081ae5/best-pokemon-games.original.jpg"
+      url: "https://images.nintendolife.com/505ca16081ae5/best-pokemon-games.original.jpg",
     },
     {
+      id: 2,
       name: "Pokémon Unite (versión Android/iOS)",
       category: "Noticia",
-      url:
-        "https://esports.as.com/2021/07/23/pokemon/Pokemon-Unite_1485461460_725471_1440x600.png"
+      url: "https://media.vandal.net/i/640x360/8-2021/2021891145065_1.jpg",
     },
     {
+      id: 3,
       name: "Secuela de Detective Pikachu",
       category: "Noticia",
-      url: "https://images8.alphacoders.com/969/thumb-1920-969049.png"
+      url: "https://images8.alphacoders.com/969/thumb-1920-969049.png",
     },
     {
+      id: 4,
       name: "Nintendo Switch (Diseño OLED)",
       category: "Noticia",
-      url:
-        "https://www.nintenderos.com/wp-content/uploads/2021/08/slider124.png"
+      url: "https://i1.wp.com/hipertextual.com/wp-content/uploads/2021/07/E5nXkxtWEAER98n.jpg?fit=1200%2C581&ssl=1",
     },
     {
-      name: "Nuevo Remake de Spirit",
+      id: 5,
+      name: "Blissey ya está disponible en Pokémon UNITE",
       category: "Noticia",
-      url:
-        "https://www.nintenderos.com/wp-content/uploads/2021/08/slider131.png"
-    }
+      url: "https://assets.pokemon.com/assets/cms2-es-es/img/video-games/_tiles/pokemon-unite/08182021/pokemon-unite-169.jpg",
+    },
+    {
+      id: 6,
+      name: "La aplicación TV Pokémon ya está disponible en Nintendo Switch",
+      category: "Noticia",
+      url: "https://assets.pokemon.com/assets/cms2-es-es/img/watch-pokemon-tv/_tiles/pokemon-tv-app/nintendo-switch/nintendo-switch-169-es.jpg",
+    },
   ],
   displayDefault: 12,
   offset: 0,
@@ -48,7 +54,7 @@ const initialState = {
   pokemons: [],
   error: false,
   loading: false,
-  menu: false
+  menu: false,
 };
 
 export default function (state = initialState, action) {
@@ -56,32 +62,30 @@ export default function (state = initialState, action) {
     case MENU_SIDER_HANDLER:
       return {
         ...state,
-        menu: !state.menu
+        menu: !state.menu,
       };
     case GET_POKEMONS:
       return {
         ...state,
         loading: true,
-        offset: 0,
-        display: 12
       };
     case GET_POKEMONS_SUCCESS:
       return {
         ...state,
-        pokemons: action.payload,
+        pokemons: [...state.pokemons, ...action.payload],
         loading: false,
         offset: state.offset + state.displayDefault,
-        display: state.display + state.displayDefault
+        display: state.display + state.displayDefault,
       };
     case GET_POKEMONS_ERROR:
       return {
         ...state,
-        loading: false
+        loading: false,
       };
     case GET_MORE_POKEMONS:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case GET_MORE_POKEMONS_SUCCESS:
       return {
@@ -89,7 +93,7 @@ export default function (state = initialState, action) {
         loading: false,
         pokemons: [...state.pokemons, ...action.payload],
         offset: state.offset + state.displayDefault,
-        display: state.display + state.displayDefault
+        display: state.display + state.displayDefault,
       };
     default:
       return state;

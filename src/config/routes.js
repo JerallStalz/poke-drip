@@ -1,4 +1,4 @@
-import Home from "../components/Home";
+import Container from "../components/Container";
 import News from "../components/News";
 import Pokedex from "../components/Pokedex";
 import Main from "../components/Main";
@@ -7,28 +7,28 @@ const routes = [
   {
     path: "/",
     exact: false,
-    component: Home,
+    component: Container,
     routes: [
       {
         path: "/",
         exact: true,
-        component: Main
+        component: Main,
       },
       {
         path: "/news",
         exact: true,
-        component: News
+        component: News,
       },
       {
         path: "/pokedex",
         exact: true,
-        component: Pokedex
+        component: Pokedex,
       },
       {
-        component: Error404
-      }
-    ]
-  }
+        component: Error404,
+      },
+    ],
+  },
 ];
 
 export default routes;

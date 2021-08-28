@@ -17,15 +17,27 @@ export default function MenuSider() {
         <input placeholder="Buscar un Pokémon" name="name" id="name2" />
       </div>
       <div className="menu-sider__buttons">
-        <Link onClick={openMenu} to="/">
+        <Link
+          className={window.location.pathname === "/" ? "active" : null}
+          onClick={openMenu}
+          to="/"
+        >
           <i className="fas fa-home" />
           <span>Inicio</span>
         </Link>
-        <Link to="/pokedex" onClick={openMenu}>
+        <Link
+          to="/pokedex"
+          onClick={openMenu}
+          className={window.location.pathname === "/pokedex" ? "active" : null}
+        >
           <i className="fas fa-gamepad" />
           <span>Pokedex</span>
         </Link>
-        <Link to="/news" onClick={openMenu}>
+        <Link
+          to="/news"
+          onClick={openMenu}
+          className={window.location.pathname === "/news" ? "active" : null}
+        >
           <i className="fas fa-newspaper" />
           <span>Noticias</span>
         </Link>

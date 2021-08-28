@@ -1,21 +1,24 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getPokemons, getMorePokemons } from "../actions";
+import { getPokemons } from "../actions";
 import Pokemon from "./Pokemon";
 
 export default function Pokedex() {
   const dispatch = useDispatch();
+  const displayDefault = useSelector((state) => state.displayDefault);
   const offset = useSelector((state) => state.offset);
+  const loading = useSelector((state) => state.loading);
   const display = useSelector((state) => state.display);
   const pokemons = useSelector((state) => state.pokemons);
 
-  console.log(offset, display);
-  const getPoke = (offset, display) => dispatch(getPokemons(offset, display));
-  const getMorePoke = (offset, display) =>
-    dispatch(getMorePokemons(offset, display));
+  const getPoke = (offset, display, loading, realOffset) =>
+    dispatch(getPokemons(offset, display, loading, realOffset));
+
   useEffect(() => {
-    getPoke(offset, display);
+    getPoke(0, displayDefault, null, offset);
+    console.log("ejecutando");
   }, []);
+
   return (
     <div className="pokedex">
       <div className="pokedex-container">
@@ -23,16 +26,13 @@ export default function Pokedex() {
           {pokemons.map((pokemon) => (
             <Pokemon pokemon={pokemon} key={pokemon.pokedex} />
           ))}
+        </div>
+        <div className="pokedex-container__button-container">
           <button
-            style={{
-              height: "40px",
-              width: "120px",
-              background: "#ffccff",
-              fontSize: "24px"
-            }}
-            onClick={() => getMorePoke(offset, display)}
+            className={loading ? "disable" : "btn"}
+            onClick={() => getPoke(offset, display, loading)}
           >
-            Ver mas
+            Cargar más Pokémons
           </button>
         </div>
       </div>

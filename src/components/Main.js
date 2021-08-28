@@ -1,12 +1,12 @@
 import React from "react";
-import Carousel from "./Carousel";
+import NewsBox from "./NewsBox";
+import Slider from "./Slider";
 export default function Main() {
   return (
     <main className="main">
       <div className="main-container">
-        <div className="main-container__carousel">
-          <Carousel />
-        </div>
+        <Slider />
+        <NewsBox />
       </div>
     </main>
   );

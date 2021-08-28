@@ -10,8 +10,11 @@ export default function Header() {
   const menu = useSelector((state) => state.menu);
   return (
     <div className="header">
-      <div className="header-menu" onClick={() => openMenu()}>
-        <i className={`fas fa-list ${menu ? "rotated" : "unrotated"}`} />
+      <div className="header-menu">
+        <i
+          onClick={() => openMenu()}
+          className={`fas fa-bars ${menu ? "rotated" : "unrotated"}`}
+        />
       </div>
       <Link to="/" className="header-logo__container">
         <img src={logo} alt="logo" />
@@ -20,22 +23,6 @@ export default function Header() {
           <span>Drip</span>
         </div>
       </Link>
-      <div className="header-buttons">
-        <Link to="/">Inicio</Link>
-        <Link to="/pokedex">Pokedex</Link>
-        <Link to="/news">Noticias</Link>
-      </div>
-      <div className="header-search">
-        <label htmlFor="name">
-          <i className="fas fa-search" />
-        </label>
-        <input
-          placeholder="Busque un pokemon"
-          name="name"
-          type="text"
-          id="name"
-        />
-      </div>
     </div>
   );
 }

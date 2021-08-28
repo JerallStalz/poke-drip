@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import routes from "./config/routes";
 import { Provider } from "react-redux";
 import store from "./store";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
