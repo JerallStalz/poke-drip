@@ -1,11 +1,16 @@
 import {
   MENU_SIDER_HANDLER,
   GET_POKEMONS,
-  GET_POKEMONS_ERROR,
   GET_POKEMONS_SUCCESS,
-  GET_MORE_POKEMONS,
-  GET_MORE_POKEMONS_ERROR,
-  GET_MORE_POKEMONS_SUCCESS,
+  GET_POKEMONS_ERROR,
+  CLEAN_POKEMONS,
+  SELECT_REGION,
+  GET_REGION,
+  GET_REGION_SUCCESS,
+  GET_REGION_ERROR,
+  SEARCH_POKEMON,
+  SEARCH_POKEMON_ERROR,
+  SEARCH_POKEMON_SUCCESS,
 } from "../types";
 
 const initialState = {
@@ -48,13 +53,56 @@ const initialState = {
       url: "https://assets.pokemon.com/assets/cms2-es-es/img/watch-pokemon-tv/_tiles/pokemon-tv-app/nintendo-switch/nintendo-switch-169-es.jpg",
     },
   ],
-  displayDefault: 12,
+  news: [
+    {
+      id: 1,
+      title: "Pokémon Masters EX detalla más contenidos de su segundo aniversario",
+      description: "Nos llegan más novedades que DeNA ha confirmado hoy mismo para esta aplicación para móviles. Se trata de los eventos que...",
+      imgUrl: "https://www.nintenderos.com/wp-content/uploads/2021/09/pokemon-masters-ex.jpg"
+    },
+    {
+      id: 2,
+      title: "Pokémon GO: Conoce todos los detalles de la Semana de la Moda",
+      description: "Vuelve a llegarnos un interesante mensaje relacionado con uno de los juegos más destacados del mercado de móviles. Estamos hablando en...",
+      imgUrl: "https://www.nintenderos.com/wp-content/uploads/2021/09/unnamed-1-Cropped-1-347x195.jpg"
+    },
+    {
+      id: 3,
+      title: "Consigue tu Nintendo Switch por solo 299,99 € con packs de juegos",
+      description: "Si aún no tienes la consola de Nintendo no esperes más y aprovecha la bajada de precio de Nintendo Switch Además...",
+      imgUrl: "https://www.nintenderos.com/wp-content/uploads/2021/09/switchbajadanintenderos-347x195.jpg"
+    },
+    {
+      id: 4,
+      title: "Tetris 99 confirma Maximus Cup de WarioWare: Get It Together!",
+      description: "Parece que Tetris 99 ha confirmado recientemente un nuevo evento: se trata de un evento protagonizado por WarioWare: Get It Together!. Este...",
+      imgUrl: "https://www.nintenderos.com/wp-content/uploads/2021/09/wa-1-347x195.jpg"
+    },
+    {
+      id: 5,
+      title: "Pokémon 25 The Album confirma novedades",
+      description: "Vuelve a llegarnos un interesante mensaje relacionado con una de las franquicias más queridas por parte de los nintenderos. Se trata...",
+      imgUrl: "https://www.nintenderos.com/wp-content/uploads/2021/02/pokemon-25-360x202.jpg"
+    },
+    {
+      id: 6,
+      title: "Imágenes de cartas V, VMAX y del Starter Deck 100 del JCC Pokémon",
+      description: "Para muchos niños de los años 90, Pokémon fue un fenómeno absoluto. La adictiva jugabilidad del querido RPG con su popular...",
+      imgUrl: "https://www.nintenderos.com/wp-content/uploads/2021/09/E_FLJdrXoAkwSCg-Cropped.jpg"
+    },
+  ],
+  firstLaunch: false,
+  selectedOffset: 0,
+  baseDisplay: 12,
+  baseOffset: 0,
   offset: 0,
   display: 12,
   pokemons: [],
   error: false,
+  loadingMore:  false,
   loading: false,
   menu: false,
+  selectedPokemon: null,
 };
 
 export default function (state = initialState, action) {
@@ -67,34 +115,80 @@ export default function (state = initialState, action) {
     case GET_POKEMONS:
       return {
         ...state,
-        loading: true,
+        loadingMore: true,
       };
     case GET_POKEMONS_SUCCESS:
       return {
         ...state,
-        pokemons: [...state.pokemons, ...action.payload],
-        loading: false,
-        offset: state.offset + state.displayDefault,
-        display: state.display + state.displayDefault,
+        display: state.display + state.baseDisplay,
+        offset: state.offset + state.baseDisplay,
+        pokemons: state.pokemons === 'error' ? action.payload : [...state.pokemons, ...action.payload],
+        loadingMore: false,
       };
     case GET_POKEMONS_ERROR:
       return {
         ...state,
-        loading: false,
+        loadingMore: false,
       };
-    case GET_MORE_POKEMONS:
+    case CLEAN_POKEMONS:
+      return {
+        ...state,
+        offset: state.baseOffset,
+        display: state.baseDisplay,
+      };
+    case SELECT_REGION:
+      return {
+        ...state,
+        selectedOffset: action.payload,
+        offset: action.payload,
+        display: action.payload + state.baseDisplay,
+        pokemons: [],
+      };
+    case GET_REGION:
       return {
         ...state,
         loading: true,
+        pokemons: []
       };
-    case GET_MORE_POKEMONS_SUCCESS:
+    case GET_REGION_SUCCESS:
+      return {
+        ...state,
+        offset: state.offset + state.baseDisplay,
+        display: state.display + state.baseDisplay,
+        pokemons: action.payload,
+        firstLaunch: true,
+        loading: false,
+      };
+    case GET_REGION_ERROR:
       return {
         ...state,
         loading: false,
-        pokemons: [...state.pokemons, ...action.payload],
-        offset: state.offset + state.displayDefault,
-        display: state.display + state.displayDefault,
       };
+    case SEARCH_POKEMON:
+      return {
+        ...state,
+        loading: true,
+        menu: false,
+        pokemons: []
+
+      };
+    case SEARCH_POKEMON_SUCCESS:
+      return {
+        ...state,
+        offset: state.baseOffset,
+        display: state.baseDisplay,
+        pokemons: [action.payload],
+        loading: false,
+      };
+    case SEARCH_POKEMON_ERROR:
+      return {
+        ...state,
+        offset: state.baseOffset,
+        display: state.baseDisplay,
+        loading: false,
+        pokemons: 'error'
+      };
+
     default:
       return state;
   }

@@ -4,12 +4,12 @@ import Footer from "./Footer";
 import Header from "./Header";
 import MenuSider from "./MenuSider";
 
-export default function Container({ routes }) {
+export default function Container(props) {
   return (
     <div className="container">
       <Header />
-      <MenuSider />
-      <LoadRouters routes={routes} />
+      <MenuSider props={props} />
+      <LoadRouters routes={props.routes} />
       <Footer />
     </div>
   );

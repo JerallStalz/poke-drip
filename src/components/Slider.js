@@ -82,18 +82,15 @@ export default function Slider() {
         <i className="fas fa-chevron-right"></i>
       </button>
       <div className="thumbs-container">
-        <div className="thumbs">
-          {notice.map((notice, index) => (
-            <img
-              className={
-                slideIndex === index + 1 ? "thumbs-img__active" : "thumbs-img"
-              }
-              key={index}
-              onClick={() => moveDot(index + 1)}
-              src={notice.url}
-            />
-          ))}
-        </div>
+        {notice.map((notice, index) => (
+          <div
+            className={
+              slideIndex === index + 1 ? " thumbs thumbs-active" : "thumbs"
+            }
+            key={index}
+            onClick={() => moveDot(index + 1)}
+          ></div>
+        ))}
       </div>
     </div>
   );

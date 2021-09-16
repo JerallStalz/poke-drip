@@ -23,15 +23,15 @@ export default function Pokemon({ pokemon }) {
       </div>
       <div className="pokemon-container__stats">
         <div>
-          <h3>{pokemon.stats.hp}</h3>
+          <span>{pokemon.stats.hp}</span>
           <p>Vida</p>
         </div>
         <div>
-          <h3>{pokemon.stats.attack}</h3>
+          <span>{pokemon.stats.attack}</span>
           <p>Ataque</p>
         </div>
         <div>
-          <h3>{pokemon.stats.specialAttack}</h3>
+          <span>{pokemon.stats.specialAttack}</span>
           <p>Atq Esp</p>
         </div>
       </div>

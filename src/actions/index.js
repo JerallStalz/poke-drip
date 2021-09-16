@@ -1,11 +1,19 @@
 import {
   MENU_SIDER_HANDLER,
   GET_POKEMONS,
-  GET_POKEMONS_ERROR,
   GET_POKEMONS_SUCCESS,
-  GET_MORE_POKEMONS_ERROR,
+  GET_POKEMONS_ERROR,
+  CLEAN_POKEMONS,
+  SELECT_REGION,
+  GET_REGION,
+  GET_REGION_SUCCESS,
+  GET_REGION_ERROR,
+  SEARCH_POKEMON,
+  SEARCH_POKEMON_ERROR,
+  SEARCH_POKEMON_SUCCESS,
 } from "../types";
-import axios from "axios";
+
+import instance from "../config/instance";
 
 export function menuHandler() {
   return (dispatch) => {
@@ -13,26 +21,63 @@ export function menuHandler() {
   };
 }
 
-export function getPokemons(offset, display, loading, realOffset) {
+export function getPokemons(display, offset, loading) {
   return async (dispatch) => {
-    dispatch({ type: GET_POKEMONS });
-    if (loading === true) {
-      return dispatch({ type: GET_MORE_POKEMONS_ERROR });
-    } else if (realOffset !== 0 && loading === null) {
-      return dispatch({ type: GET_POKEMONS_ERROR });
-    } else {
+    if (loading === false) {
+      dispatch({ type: GET_POKEMONS });
       try {
-        const pokemons = await axios.get(
-          "https://poke-drip-server.herokuapp.com/pokemons/get",
-          {
-            params: { offset, display },
-          }
-        );
+        const pokemons = await instance.get("pokemons/get", {
+          params: { display, offset },
+        });
         dispatch({ type: GET_POKEMONS_SUCCESS, payload: pokemons.data });
       } catch (error) {
-        console.log(error);
         dispatch({ type: GET_POKEMONS_ERROR });
       }
+    }
+  };
+}
+
+export function getPokemonsRegion(display, offset) {
+  return async (dispatch) => {
+    dispatch({ type: GET_REGION });
+    try {
+      const pokemones = await instance.get("pokemons/get", {
+        params: { display, offset },
+      });
+      dispatch({ type: GET_REGION_SUCCESS, payload: pokemones.data });
+    } catch (error) {
+      dispatch({ type: GET_REGION_ERROR });
+    }
+  };
+}
+
+export function cleanPokemons() {
+  return (dispatch) => {
+    dispatch({ type: CLEAN_POKEMONS });
+  };
+}
+
+export function pickRegion(regionOffset) {
+  return (dispatch) => {
+    dispatch({ type: SELECT_REGION, payload: regionOffset });
+  };
+}
+
+export function searchPokemon(pokemonName) {
+  return async (dispatch) => {
+    dispatch({ type: SEARCH_POKEMON });
+    try {
+      const pokemonLower = pokemonName.toLowerCase();
+      const pokemon = await instance.get("/pokemons/search", {
+        params: { pokemonName: pokemonLower },
+      });
+      if( pokemon.data.error ) {
+      dispatch({ type: SEARCH_POKEMON_ERROR });
+      } else {
+      dispatch({ type: SEARCH_POKEMON_SUCCESS, payload: pokemon.data });
+      }
+    } catch (e) {
+      dispatch({ type: SEARCH_POKEMON_ERROR });
     }
   };
 }

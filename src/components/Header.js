@@ -10,19 +10,21 @@ export default function Header() {
   const menu = useSelector((state) => state.menu);
   return (
     <div className="header">
-      <div className="header-menu">
-        <i
-          onClick={() => openMenu()}
-          className={`fas fa-bars ${menu ? "rotated" : "unrotated"}`}
-        />
-      </div>
-      <Link to="/" className="header-logo__container">
-        <img src={logo} alt="logo" />
-        <div>
-          <span>Poke</span>
-          <span>Drip</span>
-        </div>
-      </Link>
+<div className="header-container">
+  <div className="header-menu">
+    <i
+      onClick={() => openMenu()}
+      className={`fas fa-bars ${menu ? "rotated" : "unrotated"}`}
+    />
+  </div>
+  <Link to="/" className="header-logo__container">
+      <img src={logo} alt="logo" />
+    <div>
+      <span>Poke</span>
+      <span>Drip</span>
     </div>
+  </Link>
+  </div>
+</div>
   );
 }
