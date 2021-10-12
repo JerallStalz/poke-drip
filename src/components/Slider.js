@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { focusNew } from "../actions";
 
 export default function Slider() {
   const notice = useSelector((state) => state.notice);
   const [slideIndex, setSlideIndex] = useState(1);
   const [sliderRun, setSliderRun] = useState(true);
+
+  const dispatch = useDispatch()
+  const focusNewFn = (news) => dispatch(focusNew(news))
+  const news = useSelector( state => state.news)
 
   const prevSlide = () => {
     if (slideIndex < notice.length) {
@@ -64,9 +70,9 @@ export default function Slider() {
         >
           <section className="slider-container__slide-section">
             <p>{notice.category}</p>
-            <span>{notice.name}</span>
+            <Link to='/news' onClick={() => focusNewFn(notice) }>{notice.title}</Link>
           </section>
-          <img src={notice.url} />
+          <figure><img src={notice.imgUrl} /></figure>
         </article>
       ))}
       <button

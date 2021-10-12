@@ -11,6 +11,7 @@ import {
   SEARCH_POKEMON,
   SEARCH_POKEMON_ERROR,
   SEARCH_POKEMON_SUCCESS,
+  FOCUS_NEW,
 } from "../types";
 
 import instance from "../config/instance";
@@ -80,4 +81,10 @@ export function searchPokemon(pokemonName) {
       dispatch({ type: SEARCH_POKEMON_ERROR });
     }
   };
+}
+
+export function focusNew(news){
+  return (dispatch) => {
+    dispatch({ type: FOCUS_NEW, payload: news}) 
+  }
 }

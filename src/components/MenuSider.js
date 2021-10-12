@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import { menuHandler } from "../actions";
 import { searchPokemon } from "../actions";
 

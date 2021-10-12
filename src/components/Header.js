@@ -11,9 +11,11 @@ export default function Header() {
   return (
     <div className="header">
 <div className="header-container">
-  <div className="header-menu">
+  <div 
+    className="header-menu"
+    onClick={() => openMenu()}
+  >
     <i
-      onClick={() => openMenu()}
       className={`fas fa-bars ${menu ? "rotated" : "unrotated"}`}
     />
   </div>

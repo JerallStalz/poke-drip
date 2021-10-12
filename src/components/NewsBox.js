@@ -1,8 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { focusNew } from "../actions";
 
 export default function NewsBox() {
-
+  const dispatch = useDispatch()
+  const focusNewFn = (news) => dispatch(focusNew(news))
   const news = useSelector( state => state.news)
   return (
     <div className="news-box">
@@ -12,18 +15,18 @@ export default function NewsBox() {
       <div className="article-container">
         { news.length !== 0 
         ? news.map( news => (
-                  <article className="article">
-                    <div className="article-image">
-                      <img src={news.imgUrl} />
-                    </div>
-                    <div className="article-context">
-                      <span>{news.title}</span>
-                      <p>{news.description}</p>
-                    </div>
-                    <div className="article-small">
-                      <small>20/04/2021</small> 
-                    </div>
-                </article>
+          <article className="article">
+            <div className="article-image">
+              <img src={news.imgUrl} />
+            </div>
+            <div className="article-context">
+              <Link to='/news' onClick={() => focusNewFn(news)}>{news.title}</Link>
+              <p>{news.shortDesc}</p>
+            </div>
+            <div className="article-small">
+              <small>20/04/2021</small> 
+            </div>
+          </article>
         )) 
         : null
       }

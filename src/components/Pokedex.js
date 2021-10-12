@@ -6,7 +6,11 @@ import PokedexSearchBar from "./PokedexSearchBar";
 import pokeball from "../assets/pokeball.png";
 
 export default function Pokedex() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();  
+  
+  useEffect(()=>{
+    window.scroll(0,0)
+  },[])
 
   // Redux States
   const display = useSelector((state) => state.display);

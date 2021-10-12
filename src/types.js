@@ -13,3 +13,4 @@ export const SELECT_REGION = "SELECT_REGION";
 export const GET_REGION = "GET_REGION";
 export const GET_REGION_SUCCESS = "GET_REGION_SUCCESS";
 export const GET_REGION_ERROR = "GET_REGION_ERROR";
+export const FOCUS_NEW = "FOCUS_NEW"
